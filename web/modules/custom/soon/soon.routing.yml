@@ -1,0 +1,7 @@
+soon.settings:
+  path: 'admin/structure/soon/settings'
+  defaults:
+    _form: '\Drupal\soon\Form\SoonSettingsForm'
+    _title: 'Soon'
+  requirements:
+    _permission: 'administer site configuration'
