@@ -29,7 +29,7 @@
 /web/sites/example.sites.php
 /web/sites/example.settings.local.php
 /web/sites/development.services.yml
-/themes/README.txt
+/web/themes/README.txt
 /vendor
 /web/.csslintrc
 /.editorconfig
@@ -37,14 +37,16 @@
 /web/.eslintrc.json
 /.gitattributes
 /web/.htaccess
+/web/.ht.router.php
 /web/autoload.php
 /web/composer.json
 /web/composer.lock
 /web/example.gitignore
 /web/index.php
 /web/LICENSE.txt
-/web/README.txt
-/webv/robots.txt
+/web/INSTALL.txt
+/web/README.md
+/web/robots.txt
 /web/update.php
 /web/web.config
 
