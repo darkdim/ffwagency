@@ -1,4 +1,0 @@
-services:
-  soon.dynamodb_service:
-    class: Drupal\soon\SoonDynamoDBService
-    arguments: ['@dynamo']

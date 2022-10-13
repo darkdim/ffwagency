@@ -3,3 +3,5 @@ description: This assessment is created to provide for you to show us your scope
 type: module
 package: FFW
 core_version_requirement: ^9
+dependencies:
+  - dynamodb_client:dynamodb_client

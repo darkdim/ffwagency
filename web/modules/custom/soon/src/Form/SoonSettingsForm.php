@@ -2,41 +2,15 @@
 
 namespace Drupal\soon\Form;
 
-use Drupal\Core\Config\ConfigFactoryInterface;
 use Drupal\Core\Datetime\DrupalDateTime;
 use Drupal\Core\Form\ConfigFormBase;
 use Drupal\Core\Form\FormStateInterface;
 use Drupal\dynamodb_client\DynamoDb;
-use Drupal\soon\SoonDynamoDBService;
-use Symfony\Component\DependencyInjection\ContainerInterface;
 
 /**
  * Configure soon settings for this site.
  */
 class SoonSettingsForm extends ConfigFormBase {
-
-  /**
-   * @var \Drupal\soon\SoonDynamoDBService
-   */
-  protected $dynamoDB;
-
-  /**
-   * @param \Drupal\soon\SoonDynamoDBService $dynamoDBService
-   */
-  public function __construct(SoonDynamoDBService $dynamoDBService) {
-    $this->dynamoDB = $dynamoDBService;
-  }
-
-  /**
-   * @param \Symfony\Component\DependencyInjection\ContainerInterface $container
-   *
-   * @return \Drupal\Core\Form\ConfigFormBase|\Drupal\soon\Form\SoonSettingsForm|static
-   */
-  public static function create(ContainerInterface $container) {
-    return new static(
-      $container->get('soon.dynamodb_service')
-    );
-  }
 
   /**
    * {@inheritdoc}
@@ -93,7 +67,29 @@ class SoonSettingsForm extends ConfigFormBase {
       ->set('description', $description)
       ->set('start_date', $start_date)
       ->save();
-    $this->dynamoDB->saveData($title, $description, $start_date);
+
+    $connection = DynamoDb::database();
+    $params = [
+      'TableName' => 'PAGE_TABLE',
+      'Key' => [
+        'PAGE_ID' => ['N' => '001'],
+        'PAGE_TITLE' => ['S' => 'The website coming soon...'],
+      ],
+      'ProjectionExpression' => 'PAGE_DESCRIPTION, START_DATE',
+    ];
+
+    $response = $connection->getItem($params);
+    if ($response) {
+      $params_update = [
+        'TableName' => 'PAGE_TABLE',
+        'Key' => [
+          'PAGE_ID' => ['N' => '001'],
+          'PAGE_TITLE' => ['S' => 'The website coming soon...'],
+        ],
+
+      ];
+      $connection->putItem($params_update);
+    }
 
     parent::submitForm($form, $form_state);
   }
