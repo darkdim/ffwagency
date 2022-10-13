@@ -51,3 +51,4 @@
 /web/web.config
 
 .idea/*
+scripts/node_modules
