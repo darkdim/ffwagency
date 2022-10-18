@@ -7,42 +7,12 @@ export const params = {
         {
             AttributeName: 'PAGE_ID',
             AttributeType: 'N'
-        },
-        {
-            AttributeName: 'PAGE_TITLE',
-            AttributeType: 'S'
-        },
-        {
-            AttributeName: 'START_DATE',
-            AttributeType: 'S'
         }
     ],
     KeySchema: [
         {
             AttributeName: 'PAGE_ID',
             KeyType: 'HASH'
-        },
-        {
-            AttributeName: 'PAGE_TITLE',
-            KeyType: 'RANGE'
-        }
-    ],
-    LocalSecondaryIndexes: [
-        {
-            IndexName: 'Index_PageID_StartDate',
-            KeySchema: [
-                {
-                    AttributeName: 'PAGE_ID',
-                    KeyType: 'HASH'
-                },
-                {
-                    AttributeName: 'START_DATE',
-                    KeyType: 'RANGE'
-                }
-            ],
-            Projection: {
-                ProjectionType: 'ALL',
-            }
         }
     ],
     ProvisionedThroughput: {
