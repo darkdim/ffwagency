@@ -69,36 +69,25 @@ class SoonSettingsForm extends ConfigFormBase {
       ->save();
 
     $connection = DynamoDb::database();
-    $params = [
-      'TableName' => 'PAGE_TABLE',
-      'Key' => [
-        'PAGE_ID' => ['N' => '001'],
-        'PAGE_TITLE' => ['S' => 'The website coming soon...'],
-      ],
-      'ProjectionExpression' => 'PAGE_DESCRIPTION, START_DATE',
-    ];
 
-    $response = $connection->getItem($params);
-    if ($response) {
-      $params_update = [
-        'TableName' => 'PAGE_TABLE',
-        'Item' => [
-          'PAGE_ID' => [
-            'N' => '001',
-          ],
-          'PAGE_TITLE' => [
-            'S' => $title,
-          ],
-          'PAGE_DESCRIPTION' => [
-            'S' => $description,
-          ],
-          'START_DATE' => [
-            'S' => $start_date,
-          ],
+    $params_update = [
+      'TableName' => 'PAGE_TABLE',
+      'Item' => [
+        'PAGE_ID' => [
+          'N' => '001',
         ],
-      ];
-      $result = $connection->putItem($params_update);
-    }
+        'PAGE_TITLE' => [
+          'S' => $title,
+        ],
+        'PAGE_DESCRIPTION' => [
+          'S' => $description,
+        ],
+        'START_DATE' => [
+          'S' => $start_date,
+        ],
+      ],
+    ];
+    $connection->putItem($params_update);
 
     parent::submitForm($form, $form_state);
   }
